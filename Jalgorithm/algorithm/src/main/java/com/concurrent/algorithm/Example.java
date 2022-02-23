@@ -1,11 +1,34 @@
 package com.concurrent.algorithm;
 
-import java.util.Scanner;
+import java.util.Arrays;
 
 import edu.princeton.cs.algs4.In;
 
 public class Example {
     public static void sort(Comparable[] a){
+    	
+    	//a[] 升序排列
+		int N = a.length;
+		
+		for(int i=0;i<N;i++) {
+			//a[i] 与a[i+1..N] 中最小元素交换
+			int min = i;
+			for(int j=i+1;j<N;j++) 	
+				if(less(a[j],a[min])) min = j;
+			exch(a,i,min);
+		}
+    }
+    
+    public static void sort(Comparable[] a,int lo,int hi){
+    	
+    	//a[] 升序排列
+		for(int i=lo;i<hi;i++) {
+			//a[i] 与a[i+1..N] 中最小元素交换
+			int min = i;
+			for(int j=i+1;j<hi;j++) 	
+				if(less(a[j],a[min])) min = j;
+			exch(a,i,min);
+		}
     }
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
@@ -29,9 +52,13 @@ public class Example {
         return true;
     }
     public static void main(String[] args) {
-        String[] a = In.readStrings();
-        //sort(a);
-        assert isSorted(a);
-        show(a);
+   
+        int[] a = In.readInts(args[0]);
+        Integer[] b = (Integer[]) Arrays.stream(a).boxed().toArray(Integer[]::new);
+        
+        sort(b,3,8);
+        
+        assert isSorted(b);
+        show(b);
     }
 }
